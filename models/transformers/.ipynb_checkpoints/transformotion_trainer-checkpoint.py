@@ -111,7 +111,7 @@ class TransformotionTrainer:
         #                                                 milestones=[900000000],
         #                                                 gamma=self.opt.gamma)
         self.scheduler = optim.lr_scheduler.CosineAnnealingLR(self.opt_t2m_transformer,
-                                        100000000, eta_min=1e-5)
+                                        800000, eta_min=2e-6)
         epoch = 0
         it = 0
         if self.opt.is_continue:

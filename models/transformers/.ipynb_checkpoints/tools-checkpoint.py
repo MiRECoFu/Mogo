@@ -131,20 +131,27 @@ def q_schedule(bs, low, high, device):
     schedule = 1 - cosine_schedule(noise)
     return torch.round(schedule * (high - low - 1)).long() + low
 
-def cal_performance(pred, labels, m_tokens_len, ignore_index=None, smoothing=0., tk=1):
-    loss = cal_loss(pred, labels, ignore_index, smoothing=smoothing)
+def cal_performance(out, labels, m_tokens_len, ignore_index=None, smoothing=0., tk=1):
+    # loss = cal_loss(pred, labels, ignore_index, smoothing=smoothing)
+    
     # pred_id = torch.argmax(pred, dim=1)
     # mask = labels.ne(ignore_index)
     # n_correct = pred_id.eq(labels).masked_select(mask)
     # acc = torch.mean(n_correct.float()).item()
-    sum = 196 * 6 * 32 # 6 rvq layers
-    pred_id_k = torch.topk(pred, k=tk, dim=1).indices
-    pred_id = pred_id_k[:, 0]
-    mask = labels.ne(ignore_index)
-    n_correct = (pred_id_k == labels.unsqueeze(1)).flatten(0).sum().item()
-    acc = n_correct / sum
+    bs = labels.shape[0]
+    loss_cls = 0.0
+    right_num = 0
+    sum = m_tokens_len.sum().item() * 6
+    for i in range(bs):
+        preds = out[i][:m_tokens_len[i]]
+        tgts = labels[i][:m_tokens_len[i]]
+        loss_cls += F.cross_entropy(preds, tgts, ignore_index=ignore_index) / bs
+        pred_id_k = torch.topk(preds, k=tk, dim=1).indices
+        pred_id = pred_id_k[:, 0]
+        right_num += (pred_id.flatten(0) == tgts.flatten(0)).sum().item()
+    acc = right_num / sum
 
-    return loss, pred_id, acc
+    return loss_cls, pred_id, acc
 
 
 def cal_loss(pred, labels, ignore_index=None, smoothing=0.):

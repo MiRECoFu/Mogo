@@ -6,12 +6,12 @@ from options.base_opt import BaseOptions
 class TrainT2MOptions(BaseOptions):
     def initialize(self):
         BaseOptions.initialize(self)
-        self.parser.add_argument('--batch_size', type=int, default=16, help='Batch size')
+        self.parser.add_argument('--batch_size', type=int, default=28, help='Batch size')
         self.parser.add_argument('--max_epoch', type=int, default=4000, help='Maximum number of epoch for training')
         # self.parser.add_argument('--max_iters', type=int, default=150_000, help='Training iterations')
 
         '''LR scheduler'''
-        self.parser.add_argument('--lr', type=float, default=1e-4, help='Learning rate')
+        self.parser.add_argument('--lr', type=float, default=3e-5, help='Learning rate')
         self.parser.add_argument('--gamma', type=float, default=0.1, help='Learning rate schedule factor')
         self.parser.add_argument('--milestones', default=[50_000], nargs="+", type=int,
                             help="learning rate schedule (iterations)")
@@ -35,4 +35,4 @@ class TrainT2MOptions(BaseOptions):
 
         self.is_train = True
 
-# python trainers/train_transformotion.py --dataset_name t2m --name trm_xl_b8_d1024_801_clip_nh16_nl12_downt_1_r_once --vq_name rvq_down_t_1_d1024 --gpu_id 0
+# python trainers/train_transformotion.py --dataset_name t2m --name trm_xl_b28_d1024_812_clip_nh16_nl12_downt_1_r_once --vq_name rvq_down_t_1 --gpu_id 0

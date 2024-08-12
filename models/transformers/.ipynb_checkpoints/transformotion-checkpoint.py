@@ -112,13 +112,13 @@ class Transformotion(nn.Module):
         # self.pos_embs = nn.ModuleList([nn.Embedding(seq_len * 4, self.decoder_xl_dim) for seq_len in range(self.opt.num_quantizers)])
         self.quant_emb = nn.Linear(self.opt.num_quantizers, self.decoder_xl_dim)
         self.xls = nn.ModuleList([])
-        layer_list = [12, 8, 4, 4, 2, 2]
+        layer_list = [18, 10, 6, 4, 2, 2]
         for i in range(self.opt.num_quantizers):
             # print(f"nl{i}====== {num_layers}")
             trm_xl = TrmXLDecoder(self.num_tokens, layer_list[i], num_heads,
-                            self.decoder_xl_dim, d_head=self.decoder_xl_dim // num_heads, d_inner=1024*2, dropout=dropout,
+                            self.decoder_xl_dim, d_head=self.decoder_xl_dim // num_heads, d_inner=self.decoder_xl_dim*4, dropout=dropout,
                             dropatt=dropout, tie_weight=True, 
-                            d_embed=1024, div_val=1, 
+                            d_embed=self.decoder_xl_dim, div_val=1, 
                             tie_projs=tie_projs, pre_lnorm=False,
                             tgt_len=self.seq_len, ext_len=self.seq_len, mem_len=self.seq_len,
                             cutoffs=cutoffs).to(self.device)
@@ -284,9 +284,9 @@ class Transformotion(nn.Module):
         # logits = self.head(output)
         if is_generating is False:
             # # self.mems = mems
-            preds = rearrange(out, 'b ... c q -> b c (... q)')
-            labels = rearrange(labels, 'b ... -> b (...)')
-            ce_loss, pred_id, acc = cal_performance(preds, labels, m_lens, self.pad_id)
+            # preds = rearrange(out, 'b ... c q -> b c (... q)')
+            # labels = rearrange(labels, 'b ... -> b (...)')
+            ce_loss, pred_id, acc = cal_performance(out, labels, m_lens, self.pad_id)
             
             # loss = loss.float().mean().type_as(loss)
             return ce_loss, acc, pred_id, out, logits
