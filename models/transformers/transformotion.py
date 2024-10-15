@@ -99,7 +99,7 @@ class Transformotion(nn.Module):
         #                     tie_projs=tie_projs, pre_lnorm=False,
         #                     tgt_len=210, ext_len=210, mem_len=210,
         #                     cutoffs=cutoffs).to(self.device)
-        self.seq_len = 220
+        self.seq_len = 240
         # self.start_tokens = nn.Parameter(torch.randn(self.decoder_xl_dim))
         # print(f"self.start_tokens init==={self.start_tokens }")
         self.encode_quant = partial(F.one_hot, num_classes=self.opt.num_quantizers)
@@ -112,11 +112,17 @@ class Transformotion(nn.Module):
         # self.pos_embs = nn.ModuleList([nn.Embedding(seq_len * 4, self.decoder_xl_dim) for seq_len in range(self.opt.num_quantizers)])
         self.quant_emb = nn.Linear(self.opt.num_quantizers, self.decoder_xl_dim)
         self.xls = nn.ModuleList([])
-        layer_list = [18, 10, 6, 4, 2, 2]
+        # layer 18 10 6 4 2 2 for 1st ver
+        # layer_list = [18, 10, 6, 4, 2, 2]
+        layer_list = [18, 16, 6, 4, 2, 2]
+        # layer head 16, 8, 4, 2, 2, 2 for 1st ver
+        # head_list = [16, 8, 4, 2, 2, 2]
+        head_list = [16, 12, 4, 2, 2, 2]
         for i in range(self.opt.num_quantizers):
             # print(f"nl{i}====== {num_layers}")
-            trm_xl = TrmXLDecoder(self.num_tokens, layer_list[i], num_heads,
-                            self.decoder_xl_dim, d_head=self.decoder_xl_dim // num_heads, d_inner=self.decoder_xl_dim*4, dropout=dropout,
+            cur_heads = head_list[i]
+            trm_xl = TrmXLDecoder(self.num_tokens, layer_list[i], cur_heads,
+                            self.decoder_xl_dim, d_head=self.decoder_xl_dim // cur_heads, d_inner=self.decoder_xl_dim*4, dropout=dropout,
                             dropatt=dropout, tie_weight=True, 
                             d_embed=self.decoder_xl_dim, div_val=1, 
                             tie_projs=tie_projs, pre_lnorm=False,
@@ -391,7 +397,7 @@ class Transformotion(nn.Module):
             #     generated = generated[:, :-1]
         # print(f"motion res_seq_ids ========================+> {res_seq_ids}")
         motion_ids = torch.cat(res_seq_ids, dim=1).to(self.device)
-        print(f"motion motion_ids ========================+> {motion_ids}\n labels====> {labels}")
+        # print(f"motion motion_ids ========================+> {motion_ids}\n labels====> {labels}")
         # gathered_ids = repeat(motion_ids.unsqueeze(-1), 'b n -> b n d', d=6)
         pred_motions = self.vq_model.forward_decoder(motion_ids)
         # print(f"motion pred_motions ========================+> {pred_motions.shape}\n labels========================+> {labels.shape}")

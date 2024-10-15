@@ -106,12 +106,12 @@ class TransformotionTrainer:
         self.transformotion.to(self.device)
         self.vq_model.to(self.device)
 
-        self.opt_t2m_transformer = optim.AdamW(self.transformotion.parameters(), lr=self.opt.lr, weight_decay=1e-7)
+        self.opt_t2m_transformer = optim.AdamW(self.transformotion.parameters(), lr=self.opt.lr, weight_decay=0)
         # self.scheduler = optim.lr_scheduler.MultiStepLR(self.opt_t2m_transformer,
         #                                                 milestones=[900000000],
         #                                                 gamma=self.opt.gamma)
         self.scheduler = optim.lr_scheduler.CosineAnnealingLR(self.opt_t2m_transformer,
-                                        800000, eta_min=2e-6)
+                                        800000, eta_min=3e-6)
         epoch = 0
         it = 0
         if self.opt.is_continue:
