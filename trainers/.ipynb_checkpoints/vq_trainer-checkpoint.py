@@ -200,7 +200,6 @@ class RVQTokenizerTrainer:
                 best_div=best_div, best_top1=best_top1,
                 best_top2=best_top2, best_top3=best_top3, best_matching=best_matching, eval_wrapper=eval_wrapper)
 
-            wandb.log({"Val/FID": best_fid, "Val/best_top1": best_top1, "Val/best_matching": best_matching})
 
             if epoch % self.opt.eval_every_e == 0:
                 data = torch.cat([self.motions[:4], self.pred_motion[:4]], dim=0).detach().cpu().numpy()

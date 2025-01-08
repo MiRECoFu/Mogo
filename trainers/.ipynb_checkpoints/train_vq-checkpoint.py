@@ -1,6 +1,11 @@
 import os
+import sys
 from os.path import join as pjoin
+# 获取当前脚本所在的目录
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
+# 将项目根目录添加到 Python 路径中
+sys.path.append(os.path.join(current_dir, '..'))
 import torch
 from torch.utils.data import DataLoader
 
@@ -83,6 +88,8 @@ if __name__ == "__main__":
 
     train_split_file = pjoin(opt.data_root, 'train.txt')
     val_split_file = pjoin(opt.data_root, 'val.txt')
+    opt.code_dim = 512
+    opt.width = 512
 
 
     net = RVQVAE(opt,
@@ -126,7 +133,7 @@ if __name__ == "__main__":
     eval_val_loader, _ = get_dataset_motion_loader(dataset_opt_path, 32, 'val', device=opt.device)
     trainer.train(train_loader, val_loader, eval_val_loader, eval_wrapper, plot_t2m)
 
-## train_vq.py --dataset_name kit --batch_size 512 --name VQVAE_dp2 --gpu_id 3
+## python trainers/train_vq.py --dataset_name t2m --batch_size 512 --name rvq_n8192_d128_cmp --gpu_id 0
 ## train_vq.py --dataset_name kit --batch_size 256 --name VQVAE_dp2_b256 --gpu_id 2
 ## train_vq.py --dataset_name kit --batch_size 1024 --name VQVAE_dp2_b1024 --gpu_id 1
 ## python train_vq.py --dataset_name kit --batch_size 256 --name VQVAE_dp1_b256 --gpu_id 2

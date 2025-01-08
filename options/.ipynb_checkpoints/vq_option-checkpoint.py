@@ -15,7 +15,7 @@ def arg_parse(is_train=False):
     parser.add_argument('--max_epoch', default=50, type=int, help='number of total epochs to run')
     # parser.add_argument('--total_iter', default=None, type=int, help='number of total iterations to run')
     parser.add_argument('--warm_up_iter', default=2000, type=int, help='number of total iterations for warmup')
-    parser.add_argument('--lr', default=3e-4, type=float, help='max learning rate')
+    parser.add_argument('--lr', default=2e-4, type=float, help='max learning rate')
     parser.add_argument('--milestones', default=[150000, 250000], nargs="+", type=int, help="learning rate schedule (iterations)")
     parser.add_argument('--gamma', default=0.1, type=float, help="learning rate decay")
 
@@ -25,20 +25,20 @@ def arg_parse(is_train=False):
     parser.add_argument('--recons_loss', type=str, default='l1_smooth', help='reconstruction loss')
 
     ## vqvae arch
-    parser.add_argument("--code_dim", type=int, default=256, help="embedding dimension")
-    parser.add_argument("--nb_code", type=int, default=8192, help="nb of embedding")
+    parser.add_argument("--code_dim", type=int, default=512, help="embedding dimension")
+    parser.add_argument("--nb_code", type=int, default=512, help="nb of embedding")
     parser.add_argument("--mu", type=float, default=0.99, help="exponential moving average to update the codebook")
     parser.add_argument("--down_t", type=int, default=1, help="downsampling rate")
     parser.add_argument("--stride_t", type=int, default=1, help="stride size")
-    parser.add_argument("--width", type=int, default=1024, help="width of the network")
+    parser.add_argument("--width", type=int, default=512, help="width of the network")
     parser.add_argument("--depth", type=int, default=3, help="num of resblocks for each res")
     parser.add_argument("--dilation_growth_rate", type=int, default=3, help="dilation growth rate")
-    parser.add_argument("--output_emb_width", type=int, default=256, help="output embedding width")
+    parser.add_argument("--output_emb_width", type=int, default=512, help="output embedding width")
     parser.add_argument('--vq_act', type=str, default='relu', choices=['relu', 'silu', 'gelu'],
                         help='dataset directory')
     parser.add_argument('--vq_norm', type=str, default=None, help='dataset directory')
 
-    parser.add_argument('--num_quantizers', type=int, default=6, help='num_quantizers')
+    parser.add_argument('--num_quantizers', type=int, default=3, help='num_quantizers')
     parser.add_argument('--shared_codebook', action="store_true")
     parser.add_argument('--quantize_dropout_prob', type=float, default=0.2, help='quantize_dropout_prob')
     # parser.add_argument('--use_vq_prob', type=float, default=0.8, help='quantize_dropout_prob')

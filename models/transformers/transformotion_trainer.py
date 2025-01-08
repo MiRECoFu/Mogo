@@ -111,7 +111,7 @@ class TransformotionTrainer:
         #                                                 milestones=[900000000],
         #                                                 gamma=self.opt.gamma)
         self.scheduler = optim.lr_scheduler.CosineAnnealingLR(self.opt_t2m_transformer,
-                                        800000, eta_min=3e-6)
+                                        8000000, eta_min=5e-6)
         epoch = 0
         it = 0
         if self.opt.is_continue:
@@ -125,15 +125,15 @@ class TransformotionTrainer:
         print('Iters Per Epoch, Training: %04d, Validation: %03d' % (len(train_loader), len(val_loader)))
         logs = defaultdict(def_value, OrderedDict())
 
-        # best_fid, best_div, best_top1, best_top2, best_top3, best_matching, writer = evaluation_mask_transformer(
-        #     self.opt.save_root, eval_val_loader, self.transformotion, self.vq_model, self.logger, epoch,
-        #     best_fid=100, best_div=100,
-        #     best_top1=0, best_top2=0, best_top3=0,
-        #     best_matching=100, eval_wrapper=eval_wrapper,
-        #     plot_func=plot_eval, save_ckpt=False, save_anim=True
-        # )
-        best_fid, best_div, best_top1, best_top2, best_top3, best_matching = 100, 100, 0, 0, 0, 100
-        best_acc = 0.
+        best_fid, best_div, best_top1, best_top2, best_top3, best_matching, writer = evaluation_mask_transformer(
+            self.opt.save_root, eval_val_loader, self.transformotion, self.vq_model, self.logger, epoch,
+            best_fid=100, best_div=100,
+            best_top1=0, best_top2=0, best_top3=0,
+            best_matching=100, eval_wrapper=eval_wrapper,
+            plot_func=plot_eval, save_ckpt=False, save_anim=True
+        )
+        # best_fid, best_div, best_top1, best_top2, best_top3, best_matching = 100, 100, 0, 0, 0, 100
+        # best_acc = 0.
 
         while epoch < self.opt.max_epoch:
             self.transformotion.train()

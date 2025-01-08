@@ -99,7 +99,7 @@ class Transformotion(nn.Module):
         #                     tie_projs=tie_projs, pre_lnorm=False,
         #                     tgt_len=210, ext_len=210, mem_len=210,
         #                     cutoffs=cutoffs).to(self.device)
-        self.seq_len = 240
+        self.seq_len = 620
         # self.start_tokens = nn.Parameter(torch.randn(self.decoder_xl_dim))
         # print(f"self.start_tokens init==={self.start_tokens }")
         self.encode_quant = partial(F.one_hot, num_classes=self.opt.num_quantizers)
@@ -114,10 +114,10 @@ class Transformotion(nn.Module):
         self.xls = nn.ModuleList([])
         # layer 18 10 6 4 2 2 for 1st ver
         # layer_list = [18, 10, 6, 4, 2, 2]
-        layer_list = [18, 16, 6, 4, 2, 2]
+        layer_list = [20, 18, 8, 6, 2, 2]
         # layer head 16, 8, 4, 2, 2, 2 for 1st ver
         # head_list = [16, 8, 4, 2, 2, 2]
-        head_list = [16, 12, 4, 2, 2, 2]
+        head_list = [18, 16, 12, 6, 6, 6]
         for i in range(self.opt.num_quantizers):
             # print(f"nl{i}====== {num_layers}")
             cur_heads = head_list[i]
@@ -264,10 +264,15 @@ class Transformotion(nn.Module):
             start_tokens = self.quant_emb(q_onehot).unsqueeze(1) 
             # stage_tokens = tokens_at_stages[ind] + start_tokens
             stage_tokens = tokens_at_stages[ind]
+            cond_token = prompt_logits.unsqueeze(1) + start_tokens
             if ntokens == 0:
-                stage_tokens =  torch.cat((prompt_logits.unsqueeze(1), start_tokens), dim=-2)
+                stage_tokens =  cond_token
             else:
-                stage_tokens =torch.cat((prompt_logits.unsqueeze(1), start_tokens, stage_tokens), dim=-2)
+                stage_tokens =torch.cat((cond_token, stage_tokens), dim=-2)
+            # if ntokens == 0:
+            #     stage_tokens =  torch.cat((prompt_logits.unsqueeze(1), start_tokens), dim=-2)
+            # else:
+            #     stage_tokens =torch.cat((prompt_logits.unsqueeze(1), start_tokens, stage_tokens), dim=-2)
                 
                 
             *prec_dims, _, _ = stage_tokens.shape
@@ -279,7 +284,7 @@ class Transformotion(nn.Module):
             logits = self.head(attended)
             all_logits.append(logits)
         out = torch.stack(all_logits, dim=-1)
-        out = out[:, 1:, :, :] if is_generating==False else out
+        # out = out[:, 1:, :, :] if is_generating==False else out # 2 cond
                 
                 
         # ret, pred_hid = self.seqTransDecoderXL(is_generating, prompt_logits.unsqueeze(0), motion_ids.permute(1, 0), labels.permute(1, 0))
@@ -397,7 +402,7 @@ class Transformotion(nn.Module):
             #     generated = generated[:, :-1]
         # print(f"motion res_seq_ids ========================+> {res_seq_ids}")
         motion_ids = torch.cat(res_seq_ids, dim=1).to(self.device)
-        # print(f"motion motion_ids ========================+> {motion_ids}\n labels====> {labels}")
+        print(f"motion motion_ids ========================+> {motion_ids}\n labels====> {labels}")
         # gathered_ids = repeat(motion_ids.unsqueeze(-1), 'b n -> b n d', d=6)
         pred_motions = self.vq_model.forward_decoder(motion_ids)
         # print(f"motion pred_motions ========================+> {pred_motions.shape}\n labels========================+> {labels.shape}")

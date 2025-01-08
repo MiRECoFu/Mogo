@@ -109,10 +109,10 @@ if __name__ == '__main__':
 
     opt.num_tokens = vq_opt.nb_code
     opt.num_quantizers = 6
-    clip_version = 'ViT-B/32'
+    clip_version = 'ViT-L/14'
     transformotion = Transformotion(code_dim=opt.code_dim, 
                                     vq_model=vq_model, 
-                                    clip_dim=512,
+                                    clip_dim=768,
                                     clip_version=clip_version,
                                     opt=opt)
     # if opt.fix_token_emb:

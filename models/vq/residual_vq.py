@@ -38,7 +38,7 @@ class ResidualVQ(nn.Module):
         super().__init__()
 
         self.num_quantizers = num_quantizers
-
+        print(f"ResidualVQ: num_quantizers{num_quantizers}, {kwargs}")
         # self.layers = nn.ModuleList([VectorQuantize(accept_image_fmap = accept_image_fmap, **kwargs) for _ in range(num_quantizers)])
         if shared_codebook:
             layer = QuantizeEMAReset(**kwargs)

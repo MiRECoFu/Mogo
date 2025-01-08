@@ -6,7 +6,7 @@ from options.base_opt import BaseOptions
 class TrainT2MOptions(BaseOptions):
     def initialize(self):
         BaseOptions.initialize(self)
-        self.parser.add_argument('--batch_size', type=int, default=38, help='Batch size')
+        self.parser.add_argument('--batch_size', type=int, default=32, help='Batch size')
         self.parser.add_argument('--max_epoch', type=int, default=4000, help='Maximum number of epoch for training')
         # self.parser.add_argument('--max_iters', type=int, default=150_000, help='Training iterations')
 
@@ -35,4 +35,4 @@ class TrainT2MOptions(BaseOptions):
 
         self.is_train = True
 
-# python trainers/train_transformotion.py --dataset_name t2m --name trm_xl_b38_d1024_905_clip_nh16_nl18.14_downt_1_r_once_mems --vq_name rvq_n8192_d128 --gpu_id 0
+# python trainers/train_transformotion.py --dataset_name t2m --name trm_xl_b36_d1024_1204_downt_1_r_w_cmp_mx_l920 --vq_name rvq_n8192_d128 --gpu_id 0 --is_continue

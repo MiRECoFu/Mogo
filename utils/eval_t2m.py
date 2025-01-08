@@ -507,7 +507,7 @@ def evaluation_mask_transformer(out_dir, val_loader, trans, vq_model, writer, ep
 
     msg = f"--> \t Eva. Ep {ep} :, FID. {fid:.4f}, Diversity Real. {diversity_real:.4f}, Diversity. {diversity:.4f}, R_precision_real. {R_precision_real}, R_precision. {R_precision}, matching_score_real. {matching_score_real}, matching_score_pred. {matching_score_pred}"
     print(msg)
-    wandb.log({"Gen/FID": fid, "Gen/Diversity": diversity})
+    wandb.log({"Gen/FID": fid, "Gen/Diversity": diversity, "Gen/top1": R_precision[0],"Gen/top2": R_precision[1], 'Gen/matching_score': matching_score_pred})
 
     # if draw:
     writer.add_scalar('./Test/FID', fid, ep)

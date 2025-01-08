@@ -623,7 +623,8 @@ class TrmXLDecoder(nn.Module):
         tgt_len = target.size(0)
         hidden, new_mems = self._forward(is_generate, word_emb, target, mems=mems)
 
-        pred_hid = hidden[-tgt_len-1:] # because of the prefix tokens
+        # pred_hid = hidden[-tgt_len-1:] # because of the prefix tokens
+        pred_hid = hidden[-tgt_len:] # add cond
         if self.sample_softmax > 0 and self.training:
             assert self.tie_weight
             logit = sample_logits(self.word_emb,

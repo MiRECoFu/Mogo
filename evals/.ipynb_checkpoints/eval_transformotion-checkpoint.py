@@ -43,10 +43,10 @@ def load_vq_model(vq_opt):
     return vq_model, vq_opt
 
 def load_trans_model(model_opt, which_model, vq_model):
-    clip_version = 'ViT-L/14'
+    clip_version = 'ViT-B/32'
     transformotion = Transformotion(code_dim=model_opt.code_dim, 
                                     vq_model=vq_model, 
-                                    clip_dim=768,
+                                    clip_dim=512,
                                     clip_version=clip_version,
                                     opt=model_opt)
     ckpt = torch.load(pjoin(model_opt.checkpoints_dir, model_opt.dataset_name, model_opt.name, 'model', which_model),
@@ -80,7 +80,7 @@ if __name__ == '__main__':
 
     model_opt_path = pjoin(root_dir, 'opt.txt')
     model_opt = get_opt(model_opt_path, device=opt.device)
-    clip_version = 'ViT-L/14'
+    clip_version = 'ViT-B/32'
     
     vq_opt_path = pjoin(opt.checkpoints_dir, opt.dataset_name, model_opt.vq_name, 'opt.txt')
     vq_opt = get_opt(vq_opt_path, device=opt.device)
@@ -159,7 +159,7 @@ if __name__ == '__main__':
     f.close()
 
 
-# python evals/eval_transformotion.py --name trm_xl_b36_d1024_1204_downt_1_r_w_cmp_mx --dataset_name t2m --gpu_id 0 --temperature 1 --gumbel_sample --ext trm_xl_b36_d1024_1204_downt_1_r_w_cmp_mx_eval
+# python evals/eval_transformotion.py --name trm_xl_b38_d1024_905_clip_nh16_nl18.14_downt_1_r_once_mems --dataset_name t2m --gpu_id 0 --temperature 1 --gumbel_sample --ext trm_xl_b38_d1024_905_clip_nh16_nl18.14_downt_1_r_once_mems_eval
         
         
         
