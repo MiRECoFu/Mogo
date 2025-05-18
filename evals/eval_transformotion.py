@@ -159,7 +159,7 @@ if __name__ == '__main__':
     f.close()
 
 
-# python evals/eval_transformotion.py --name trm_xl_b36_d1024_1204_downt_1_r_w_cmp_mx --dataset_name t2m --gpu_id 0 --temperature 1 --gumbel_sample --ext trm_xl_b36_d1024_1204_downt_1_r_w_cmp_mx_eval
+# python evals/eval_transformotion.py --name trm_xl_b38_d1024_20250108 --dataset_name t2m --gpu_id 0 --temperature 1 --gumbel_sample --ext trm_xl_b38_d1024_20250108_eval
         
         
         

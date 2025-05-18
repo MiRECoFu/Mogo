@@ -1,0 +1,53 @@
+Channels:
+ - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+ - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+ - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch
+ - defaults
+ - anaconda
+ - conda-forge
+ - pytorch
+Platform: linux-64
+Collecting package metadata (repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: /root/miniconda3/envs/transformotion
+
+  added / updated specs:
+    - boost-cpp
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    boost-cpp-1.73.0           |      h27cfd23_11          25 KB  https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+    bzip2-1.0.8                |       h5eee18b_6         262 KB  https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+    ca-certificates-2025.2.25  |       h06a4308_0         129 KB  https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+    libboost-1.73.0            |      h3ff78a5_11        13.9 MB  https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+    typing_extensions-3.10.0.2 |     pyha770c72_0          28 KB  conda-forge
+    ------------------------------------------------------------
+                                           Total:        14.3 MB
+
+The following NEW packages will be INSTALLED:
+
+  boost-cpp          anaconda/pkgs/main/linux-64::boost-cpp-1.73.0-h27cfd23_11 
+  bzip2              anaconda/pkgs/main/linux-64::bzip2-1.0.8-h5eee18b_6 
+  libboost           anaconda/pkgs/main/linux-64::libboost-1.73.0-h3ff78a5_11 
+
+The following packages will be UPDATED:
+
+  ca-certificates                      2024.3.11-h06a4308_0 --> 2025.2.25-h06a4308_0 
+
+The following packages will be SUPERSEDED by a higher-priority channel:
+
+  typing_extensions  anaconda/pkgs/main/linux-64::typing_e~ --> conda-forge/noarch::typing_extensions-3.10.0.2-pyha770c72_0 
+
+
+Proceed ([y]/n)? 
+
+Downloading and Extracting Packages: ...working... done
+Preparing transaction: ...working... done
+Verifying transaction: ...working... done
+Executing transaction: ...working... done

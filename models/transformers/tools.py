@@ -116,6 +116,39 @@ def top_k(logits, thres = 0.9, dim = 1):
     # raise
     return probs
 
+
+def sample_topk(probs, topk=1, device=None):
+    """从概率分布中按top-k随机采样
+    Args:
+        probs: shape [batch, seq_len, ntoken] 的概率分布
+        topk: 考虑的最高k个概率
+        device: 指定计算设备（默认与probs相同）
+    Returns:
+        sampled_indices: shape [batch, seq_len] 的采样结果
+    """
+    if device is None:
+        device = probs.device
+    
+    # 1. 获取topk的索引和概率
+    topk_probs, topk_indices = torch.topk(probs, k=topk, dim=-1)  # both [b, s, k]
+    
+    # 2. 生成随机选择索引（直接在目标设备上创建）
+    rand_indices = torch.randint(
+        0, topk, 
+        size=(probs.size(0), probs.size(1)),  # [b, s]
+        device=device
+    ).unsqueeze(-1)  # [b, s, 1]
+    
+    # 3. 高效收集采样结果
+    sampled_indices = torch.gather(
+        topk_indices, 
+        dim=-1, 
+        index=rand_indices
+    ).squeeze(-1)  # [b, s]
+    
+    return sampled_indices
+
+
 # noise schedules
 
 # More on large value, less on small

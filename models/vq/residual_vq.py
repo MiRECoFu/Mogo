@@ -68,8 +68,8 @@ class ResidualVQ(nn.Module):
         # because of quantize dropout, one can pass in indices that are coarse
         # and the network should be able to reconstruct
 
-        if quantize_dim < self.num_quantizers:
-            indices = F.pad(indices, (0, self.num_quantizers - quantize_dim), value = -1)
+        # if quantize_dim < self.num_quantizers:
+        #     indices = F.pad(indices, (0, self.num_quantizers - quantize_dim), value = -1)
 
         # get ready for gathering
 

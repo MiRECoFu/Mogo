@@ -541,6 +541,8 @@ def evaluation_mask_transformer(out_dir, val_loader, trans, vq_model, writer, ep
         msg = f"--> --> \t Top1 Improved from {best_top1:.4f} to {R_precision[0]:.4f} !!!"
         print(msg)
         best_top1 = R_precision[0]
+        if save_ckpt:
+            save(os.path.join(out_dir, 'model', 'best_t1.tar'), ep)
 
     if R_precision[1] > best_top2:
         msg = f"--> --> \t Top2 Improved from {best_top2:.4f} to {R_precision[1]:.4f} !!!"

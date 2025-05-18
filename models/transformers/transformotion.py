@@ -74,7 +74,7 @@ class Transformotion(nn.Module):
         self.vq_model = vq_model
         self.latent_dim = latent_dim
         # self.cond_mode = cond_mode
-        self.cond_drop_prob = 0.1
+        self.cond_drop_prob = 0.
         self.device = opt.device
         _num_tokens = opt.num_tokens + 1 # for motion pad and end
         print(f"opt.num tokens ====={opt.num_tokens}")
@@ -114,10 +114,10 @@ class Transformotion(nn.Module):
         self.xls = nn.ModuleList([])
         # layer 18 10 6 4 2 2 for 1st ver
         # layer_list = [18, 10, 6, 4, 2, 2]
-        layer_list = [20, 18, 8, 6, 2, 2]
+        layer_list = [20, 14, 8, 6, 2, 2]
         # layer head 16, 8, 4, 2, 2, 2 for 1st ver
         # head_list = [16, 8, 4, 2, 2, 2]
-        head_list = [18, 16, 12, 6, 6, 6]
+        head_list = [16, 16, 8, 8, 4, 4]
         for i in range(self.opt.num_quantizers):
             # print(f"nl{i}====== {num_layers}")
             cur_heads = head_list[i]
@@ -229,9 +229,10 @@ class Transformotion(nn.Module):
         # if labels is None:
         #     labels = motion_ids
         # # pad_token_mask = (input_ids != self.mix_emb.pad_token_id).float()
-        # # prompt = self.mask_prompt(prompt_logits, force_mask=False)
+        # prompt_logits = self.mask_prompt(prompt_logits, force_mask=False)
         
         if is_generating == False and self.training:
+            # prompt_logits = self.mask_prompt(prompt_logits, force_mask=False)
             # print(f"get detail=============>::\n motion ids:\n{motion_ids}\n{labels}")
             # labels = motion_ids.clone()
             motion_ids = motion_ids[:, :-1,:]
@@ -350,16 +351,15 @@ class Transformotion(nn.Module):
         # print(f"mask====={mask}")
         # print(f"gen mask=======++>{mask}")
         return mask
-
     
     @torch.no_grad()
     @eval_decorator
-    def generate(self, prompt_texts, m_lens, labels=None, temperature=0.6, tk=1, topk_filter_thres=0.9, cond_scale=3):
+    def generate(self, prompt_texts, m_lens, labels=None, temperature=0.6, tk=1, topk_filter_thres=0.9, cond_scale=3, socket=None, inv_transform=None, recover_from_ric=None, converter=None):
         self.eval()
         # self.seqTransDecoderXL.eval()
-        for ind, trm in enumerate(self.xls):
-            # trm.reset_length(self.seq_len, self.seq_len, self.seq_len)
-            trm.eval()
+        # for ind, trm in enumerate(self.xls):
+        #     # trm.reset_length(self.seq_len, self.seq_len, self.seq_len)
+        #     trm.eval()
         seq_len = max(m_lens).to(self.device)
         batch_size = len(m_lens)
     
@@ -384,8 +384,10 @@ class Transformotion(nn.Module):
                 # print(temperature, starting_temperature, steps_until_x0, timesteps)
                 # print(probs / temperature)
             # pred_ids = torch.multinomial(probs, num_samples=1)  # (b, seqlen)
-            dist = Categorical(probs)
-            pred_ids = dist.sample()
+            # dist = Categorical(probs)
+            # pred_ids = dist.sample()
+            pred_ids = sample_topk(probs, 1, self.device)
+            # print(f"pred_ids.shape:{pred_ids.shape}" )
             # if pred_ids == self.end_id:
             #     break
             # if pred_ids == self.opt.num_tokens:
@@ -397,18 +399,116 @@ class Transformotion(nn.Module):
             #     break
             res_seq_ids.append(pred_ids)
             generated = torch.cat(res_seq_ids, dim=1)
-            
+                    
             # if k == seq_len - 1:
             #     generated = generated[:, :-1]
         # print(f"motion res_seq_ids ========================+> {res_seq_ids}")
+        if socket is not None:
+            from datetime import datetime
+            from app import socketio
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]  # 去除微秒后3位，保留毫秒
+
+            # 打印格式化后的当前时间
+            print("解算开始时间:", current_time)
+            cur_seq_ids = res_seq_ids
+            cur_seq_ids.append(pred_ids)
+            motion_ids = torch.cat(cur_seq_ids, dim=1).to(self.device)
+            pred_motions = self.vq_model.forward_decoder(motion_ids)
+            pred_motions = pred_motions.detach().cpu().numpy()
+            data = inv_transform(pred_motions)
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]  # 去除微秒后3位，保留毫秒
+
+            # 打印格式化后的当前时间
+            print("vq inv 处理结束时间:", current_time)
+            for k, joint_data  in enumerate(data):
+
+                joint_data = joint_data[:m_lens[k]]
+                joint = recover_from_ric(torch.from_numpy(joint_data).float(), 22).numpy()
+                _, joint, rot = converter.convert(joint, filename=None, iterations=100, foot_ik=False)
+                rot_map = {}
+                pos_map = {}
+                for ind, quat_data in enumerate(rot):
+
+                    for i, quat in enumerate(quat_data):
+                        rot_map[sorted_names[i]] = quat.tolist()
+                        pos_map[sorted_names[i]] = joint[ind][i].tolist()
+                    res_data = {
+                        "rotations": rot_map,
+                        "positions": pos_map
+                    }
+                    socketio.emit("generated", res_data, namespace='/')
+                    socketio.sleep(0.02)
+            return
         motion_ids = torch.cat(res_seq_ids, dim=1).to(self.device)
         # print(f"motion motion_ids ========================+> {motion_ids}\n labels====> {labels}")
         # gathered_ids = repeat(motion_ids.unsqueeze(-1), 'b n -> b n d', d=6)
         pred_motions = self.vq_model.forward_decoder(motion_ids)
         # print(f"motion pred_motions ========================+> {pred_motions.shape}\n labels========================+> {labels.shape}")
-        for ind, trm in enumerate(self.xls):
-            trm.reset_length(self.seq_len, self.seq_len, self.seq_len)
-            trm.train()
+        # for ind, trm in enumerate(self.xls):
+        #     trm.reset_length(self.seq_len, self.seq_len, self.seq_len)
+        #     trm.train()
         # self.seqTransDecoderXL.train()
-        
+       
         return pred_motions
+
+    
+    # @torch.no_grad()
+    # @eval_decorator
+    # def generate(self, prompt_texts, m_lens, labels=None, temperature=0.6, tk=1, topk_filter_thres=0.9, cond_scale=3):
+    #     self.eval()
+    #     # self.seqTransDecoderXL.eval()
+    #     for ind, trm in enumerate(self.xls):
+    #         # trm.reset_length(self.seq_len, self.seq_len, self.seq_len)
+    #         trm.eval()
+    #     seq_len = max(m_lens).to(self.device)
+    #     batch_size = len(m_lens)
+    
+    #     res_seq_ids = []
+    #     mems = tuple()
+        
+    #     # segment_ids = torch.ones_like(generated)
+    #     generated = torch.empty(batch_size, 0, self.opt.num_quantizers, dtype=torch.long).to(self.device)
+    #     for k in range(seq_len):
+    #         # if k == 0:
+    #         #     x = torch.empty(batch_size, 0, dtype=torch.long).to(self.device)
+    #         # else:
+    #         #     x = xs
+    #         # tgt_mask = self.generate_square_subsequent_mask(generated.size(0), generated.size(1))
+    #         # cur_gen = generated if k == 0 else generated[:, k-1:k]
+    #         logits = self.forward(prompt_texts, generated, m_lens, labels=labels[:, k:k+1], mems=None, is_generating=True)
+    #         # print(f"logits==========+>{logits.shape}")
+    #         logits = logits.permute(0, 1, 3, 2)
+    #         # pred_ids = pred_id[:,-1:]
+    #         # filtered_logits = top_k(logits, topk_filter_thres, dim=-1)
+    #         probs = F.softmax(logits[:,-1,:, :] / temperature, dim=-1)  # (b, seqlen, ntoken)
+    #             # print(temperature, starting_temperature, steps_until_x0, timesteps)
+    #             # print(probs / temperature)
+    #         # pred_ids = torch.multinomial(probs, num_samples=1)  # (b, seqlen)
+    #         dist = Categorical(probs)
+    #         pred_ids = dist.sample()
+    #         # if pred_ids == self.end_id:
+    #         #     break
+    #         # if pred_ids == self.opt.num_tokens:
+    #         #     pred_ids = 0
+    #         # print(f"pred_ids==========+>{pred_ids.shape}")
+    #         pred_ids = pred_ids.unsqueeze(1)
+    #         # print(f"pred_ids======={pred_ids}, \ngenerated========{generated}")
+    #         # if k == seq_len - 1:
+    #         #     break
+    #         res_seq_ids.append(pred_ids)
+    #         generated = torch.cat(res_seq_ids, dim=1)
+            
+    #         # if k == seq_len - 1:
+    #         #     generated = generated[:, :-1]
+    #     # print(f"motion res_seq_ids ========================+> {res_seq_ids}")
+    #     motion_ids = torch.cat(res_seq_ids, dim=1).to(self.device)
+    #     # print(f"motion motion_ids ========================+> {motion_ids}\n labels====> {labels}")
+    #     # gathered_ids = repeat(motion_ids.unsqueeze(-1), 'b n -> b n d', d=6)
+    #     pred_motions = self.vq_model.forward_decoder(motion_ids)
+    #     # print(f"motion pred_motions ========================+> {pred_motions.shape}\n labels========================+> {labels.shape}")
+    #     for ind, trm in enumerate(self.xls):
+    #         trm.reset_length(self.seq_len, self.seq_len, self.seq_len)
+    #         trm.train()
+    #     # self.seqTransDecoderXL.train()
+        
+    #     return pred_motions

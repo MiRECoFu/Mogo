@@ -74,7 +74,7 @@ class Transformotion(nn.Module):
         self.vq_model = vq_model
         self.latent_dim = latent_dim
         # self.cond_mode = cond_mode
-        self.cond_drop_prob = 0.1
+        self.cond_drop_prob = 0.2
         self.device = opt.device
         _num_tokens = opt.num_tokens + 1 # for motion pad and end
         print(f"opt.num tokens ====={opt.num_tokens}")
@@ -99,7 +99,7 @@ class Transformotion(nn.Module):
         #                     tie_projs=tie_projs, pre_lnorm=False,
         #                     tgt_len=210, ext_len=210, mem_len=210,
         #                     cutoffs=cutoffs).to(self.device)
-        self.seq_len = 620
+        self.seq_len = 320
         # self.start_tokens = nn.Parameter(torch.randn(self.decoder_xl_dim))
         # print(f"self.start_tokens init==={self.start_tokens }")
         self.encode_quant = partial(F.one_hot, num_classes=self.opt.num_quantizers)
@@ -114,10 +114,10 @@ class Transformotion(nn.Module):
         self.xls = nn.ModuleList([])
         # layer 18 10 6 4 2 2 for 1st ver
         # layer_list = [18, 10, 6, 4, 2, 2]
-        layer_list = [20, 18, 8, 6, 2, 2]
+        layer_list = [20, 14, 8, 6, 2, 2]
         # layer head 16, 8, 4, 2, 2, 2 for 1st ver
         # head_list = [16, 8, 4, 2, 2, 2]
-        head_list = [18, 16, 12, 6, 6, 6]
+        head_list = [16, 16, 8, 8, 4, 4]
         for i in range(self.opt.num_quantizers):
             # print(f"nl{i}====== {num_layers}")
             cur_heads = head_list[i]
@@ -229,7 +229,7 @@ class Transformotion(nn.Module):
         # if labels is None:
         #     labels = motion_ids
         # # pad_token_mask = (input_ids != self.mix_emb.pad_token_id).float()
-        # # prompt = self.mask_prompt(prompt_logits, force_mask=False)
+        prompt_logits = self.mask_prompt(prompt_logits, force_mask=False)
         
         if is_generating == False and self.training:
             # print(f"get detail=============>::\n motion ids:\n{motion_ids}\n{labels}")
@@ -402,7 +402,7 @@ class Transformotion(nn.Module):
             #     generated = generated[:, :-1]
         # print(f"motion res_seq_ids ========================+> {res_seq_ids}")
         motion_ids = torch.cat(res_seq_ids, dim=1).to(self.device)
-        print(f"motion motion_ids ========================+> {motion_ids}\n labels====> {labels}")
+        # print(f"motion motion_ids ========================+> {motion_ids}\n labels====> {labels}")
         # gathered_ids = repeat(motion_ids.unsqueeze(-1), 'b n -> b n d', d=6)
         pred_motions = self.vq_model.forward_decoder(motion_ids)
         # print(f"motion pred_motions ========================+> {pred_motions.shape}\n labels========================+> {labels.shape}")
