@@ -11,7 +11,8 @@ from flask_socketio import SocketIO, emit
 app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent')
-
+OSS_ACCESS_KEY_ID = 'LTAI5t73baaMm8aAsK4Sr3iq'
+OSS_ACCESS_KEY_SECRET = 'oTD8yuieSavyN5vUW5YjVggX8gFE08'
 OSS_ENDPOINT = 'oss-cn-beijing.aliyuncs.com'  # 比如：oss-cn-hangzhou.aliyuncs.com
 OSS_BUCKET_NAME = 'mogo-bvh'
 
