@@ -14,9 +14,11 @@ Mogo 是一个专注于特定领域（从代码推测可能与运动生成相关
 - `Mogo/utils/`：
   - `motion_process.py`：包含运动处理相关的函数，如获取局部姿态。
   - `eval_t2m.py`：用于评估文本到运动生成模型的性能，计算 FID、多样性、R 精度等指标。
-- `Mogo/trainers/`：
-  - `train_transformotion.py`：主训练脚本，负责加载数据、模型和优化器，调用训练函数进行模型训练。
-
+- `Mogo/gen_t2m.py`：
+  动作生成基于我们的MOGO模型
+- `Mogo/gen_t2m_vq.py`：
+  动作生成基于我们的MoSA-VQ模型
+  
 ### 配置文件
 - `Mogo/environment_trm.yml`：用于创建项目所需的 Conda 环境。
 - `Mogo/requirements.txt`：列出了项目所需的 Python 依赖包。
