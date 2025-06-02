@@ -56,18 +56,33 @@ fid, diversity, R_precision, matching_score_pred, l1_dist = evaluation_res_trans
 - 确保你的环境中已经安装了 CUDA，并且 PyTorch 版本与 CUDA 版本兼容。
 - 在运行代码之前，需要准备好相应的数据集，并将数据集路径配置到 `train_transformotion.py` 中。
 
-## 贡献
-如果你想为该项目做出贡献，请遵循以下步骤：
-1. Fork 本仓库。
-2. 创建一个新的分支：`git checkout -b new-feature`。
-3. 提交你的更改：`git commit -m 'Add new feature'`。
-4. 推送至远程分支：`git push origin new-feature`。
-5. 发起一个 Pull Request。
+## License
 
-## 许可证
-请查看项目中的 LICENSE 文件以了解项目的许可信息。
+This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International License**.
+
+You are free to use this code for **research and non-commercial purposes**.  
+**Commercial use is not permitted** without explicit permission.
+
+[Read full license](http://creativecommons.org/licenses/by-nc/4.0/)
+
+Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
+
+Copyright (c) 2024 amberjar
+
+This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
+
+You are free to:
+- Share — copy and redistribute the material in any medium or format
+- Adapt — remix, transform, and build upon the material
+
+Under the following terms:
+- Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made.
+- NonCommercial — You may not use the material for commercial purposes.
+
+No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
 
 ## 联系信息
 如果你有任何问题或建议，请通过以下方式联系我们：
-- 邮箱：[your_email@example.com]
+- 邮箱：[p.fang@soton.ac.uk]
 - GitHub Issues：[https://github.com/MiRECoFu/Mogo/issues](https://github.com/MiRECoFu/Mogo/issues)
