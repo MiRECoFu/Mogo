@@ -107,11 +107,14 @@ Thank you for your interest in this project. We are a startup company, if you ar
 </p>
 
 
-## The following are examples of the generated bvh using MOGO.
-![example](assets/backflip.gif)
-![example](assets/injured-collapse-mogo.gif)
-![example](assets/skips-circle-mogo-raw.gif)
-![example](assets/stand-swim-mogo.gif)
+## The following are examples of the generated BVH using MOGO.
+
+<p align="center">
+  <img src="assets/backflip.gif" width="220"/>
+  <img src="assets/injured-collapse-mogo.gif" width="220"/>
+  <img src="assets/skips-circle-mogo-raw.gif" width="220"/>
+  <img src="assets/stand-swim-mogo.gif" width="220"/>
+</p>
 
 ## Citation
 If you use `MOGO` or `MoSA-VQ` in your work, please use the following BibTeX entries:
