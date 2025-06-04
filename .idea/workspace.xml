@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aa27e9e5-8c6d-4a17-b072-c58b96673b0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/Mogo_demo_1_00.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/Mogo_demo_2_00.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/Mogo_main_00.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/main-figure_00.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LISENCE" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
@@ -102,7 +99,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1748905195659</updated>
-      <workItem from="1748905196733" duration="8110000" />
+      <workItem from="1748905196733" duration="9270000" />
     </task>
     <servers />
   </component>

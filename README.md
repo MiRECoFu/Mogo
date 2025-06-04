@@ -1,7 +1,9 @@
 <p align="center">
   <img src="assets/Mogo_main_00.png" alt="example"/>
 </p>
-<h2 align="center">Mogo (Motion Generation with One-pass)</h2>
+<h2 align="center">MOGO: Residual Quantized Hierarchical Causal
+Transformer for High-Quality and Real-Time 3D
+Human Motion Generation</h2>
 <p align="center">
     <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer">
         <img alt="License: CC BY-NC 4.0" src="https://img.shields.io/badge/license-CC--BY--NC%204.0-lightgrey">
@@ -22,9 +24,21 @@
         <img alt="email" src="https://img.shields.io/badge/contact_me-email-yellow">
     </a>
 </p>
-
-This is the official implementation of papers 
-- NeurIPS 2025 under review
+<p align="center">
+<strong>MOGO: Residual Quantized Hierarchical Causal
+Transformer for High-Quality and Real-Time 3D
+Human Motion Generation</strong>
+    <br>
+    <a href='' target='_blank'>Dongjie Fu*</a>&emsp;
+    <a href='' target='_blank'>Tengjiao Sun</a>&emsp;
+    <a href='' target='_blank'>Pengcheng Fang*</a>&emsp;
+    <a href='' target='_blank'>Xiaohao Cai</a>&emsp;
+    <a href='' target='_blank'>Hansung Kim</a>&emsp;
+    <br>
+    University of Southampton&emsp;
+    MOGO
+    <br>
+</br>
 
 <p align="center">
   <img src="assets/main-figure_00.png" alt="example"/>
@@ -38,10 +52,10 @@ This is the official implementation of papers
 - \[2024.08.04\] Release model architecture.
 
 ## 🔥🔥🔥 Todo
-- [x] Project Page
 - [x] Code
 - [x] App.py
 - [x] Inference code of MoSA-VQ and Mogo
+- [ ] Project Page
 - [ ] Release pretrained weights train on HumanML3D
 - [ ] Release pretrained weights train on our own made huge motion dataset
 - [ ] Code of infinite length continuation and generation
@@ -57,22 +71,19 @@ pip install -r requirement.txt
 ```
 
 ## Single Image Generation
-By using the following command, you can quickly generate an image with **MIGC**.
-```
-CUDA_VISIBLE_DEVICES=0 python inference_single_image.py
-```
-The following is an example of the generated image based on stable diffusion v1.4.
- 
-<p align="center">
-  <img src="figures/MIGC_SD14_out.png" alt="example" width="200" height="200"/>
-  <img src="figures/MIGC_SD14_out_anno.png" alt="example_annotation" width="200" height="200"/>
-</p>
+By using the following command, you can quickly generate an image with **MOGO**.
 
-By using the following command, you can quickly generate an image with **MIGC++**, where both the box and mask are used to control the instance location.
+MOGO Generation
 ```
-CUDA_VISIBLE_DEVICES=0 python migc_plus_inference_single_image.py
+CUDA_VISIBLE_DEVICES=0 python gen_t2m.py
 ```
-The following are examples of the generated images using MIGC++.
+
+MoSA-VQ Generation
+```
+CUDA_VISIBLE_DEVICES=0 python gen_t2m.py
+```
+
+The following are examples of the generated images using MOGO.
 
 
 
@@ -88,23 +99,17 @@ Thank you for your interest in this project. We are a startup company, if you ar
 
 ## 🦄 Performance
 
+### 🏕️ Complex Scenarios
 <p align="center">
   <img src="assets/Mogo_demo_1_00.png" alt="example"/>
 </p>
 
+### 🌋 Difficult Conditions
 <p align="center">
   <img src="assets/Mogo_demo_2_00.png" alt="example"/>
 </p>
 
-### 🏕️ Complex Scenarios
-<div align="center">
-  <img src="https://github.com/lyuwenyu/RT-DETR/assets/77494834/52743892-68c8-4e53-b782-9f89221739e4" width=500 >
-</div>
 
-### 🌋 Difficult Conditions
-<div align="center">
-  <img src="https://github.com/lyuwenyu/RT-DETR/assets/77494834/213cf795-6da6-4261-8549-11947292d3cb" width=500 >
-</div>
 
 ## Citation
 If you use `MOGO` or `MoSA-VQ` in your work, please use the following BibTeX entries:
