@@ -30,7 +30,7 @@ Transformer for High-Quality and Real-Time 3D
 Human Motion Generation</strong>
     <br>
     <a href='' target='_blank'>Dongjie Fu*</a>&emsp;
-    <a href='' target='_blank'>Tengjiao Sun</a>&emsp;
+    <a href='' target='_blank'>Tengjiao Sun*</a>&emsp;
     <a href='' target='_blank'>Pengcheng Fang*</a>&emsp;
     <a href='' target='_blank'>Xiaohao Cai</a>&emsp;
     <a href='' target='_blank'>Hansung Kim</a>&emsp;
