@@ -43,7 +43,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "pengcheng",
-    "last_opened_file_path": "F:/Projects/Routines/Mogo",
+    "last_opened_file_path": "F:/Projects/Routines/Mogo/assets",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -53,6 +53,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\Projects\Routines\Mogo\assets" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\Projects\Routines\Mogo\assets" />
     </key>
@@ -98,7 +101,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1748905195659</updated>
-      <workItem from="1748905196733" duration="10272000" />
+      <workItem from="1748905196733" duration="10616000" />
     </task>
     <servers />
   </component>

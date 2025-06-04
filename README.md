@@ -110,10 +110,10 @@ Thank you for your interest in this project. We are a startup company, if you ar
 ## The following are examples of the generated BVH using MOGO.
 
 <p align="center">
-  <img src="assets/backflip.gif" width="220"/>
-  <img src="assets/injured-collapse-mogo.gif" width="220"/>
-  <img src="assets/skips-circle-mogo-raw.gif" width="220"/>
-  <img src="assets/stand-swim-mogo.gif" width="220"/>
+  <img src="assets/backflip.gif" width="300"/>
+  <img src="assets/injured-collapse-mogo.gif" width="300"/>
+  <img src="assets/skips-circle-mogo-raw.gif" width="300"/>
+  <img src="assets/stand-swim-mogo.gif" width="300"/>
 </p>
 
 ## Citation
