@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aa27e9e5-8c6d-4a17-b072-c58b96673b0b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/Mogo_demo_1_00.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/Mogo_demo_2_00.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/Mogo_main_00.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/main-figure_00.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/environment.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/environment_trm.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +36,9 @@
   "associatedIndex": 7
 }]]></component>
   <component name="ProjectId" id="2xyL70yLvXdNgGtB8Ul353VWCqk" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -41,7 +46,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "pengcheng",
     "last_opened_file_path": "F:/Projects/Routines/Mogo",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -51,6 +56,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Projects\Routines\Mogo\assets" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Mogo" type="PythonConfigurationType" factoryName="Python">
       <module name="Mogo" />
@@ -92,7 +102,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1748905195659</updated>
-      <workItem from="1748905196733" duration="6756000" />
+      <workItem from="1748905196733" duration="8110000" />
     </task>
     <servers />
   </component>

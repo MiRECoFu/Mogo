@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="assets/Mogo_main_00.png" alt="example"/>
+</p>
 <h2 align="center">Mogo (Motion Generation with One-pass)</h2>
 <p align="center">
     <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer">
@@ -22,6 +25,10 @@
 
 This is the official implementation of papers 
 - NeurIPS 2025 under review
+
+<p align="center">
+  <img src="assets/main-figure_00.png" alt="example"/>
+</p>
 
 ---
 ## 🚀 Updates
@@ -67,20 +74,27 @@ CUDA_VISIBLE_DEVICES=0 python migc_plus_inference_single_image.py
 ```
 The following are examples of the generated images using MIGC++.
 
-<p align="center">
-  <img src="figures/migc++_output.png" alt="example" width="1000" height="300"/>
-</p>
 
-## MIGC-GUI
-We have combined MIGC and [GLIGEN-GUI](https://github.com/mut-ex/gligen-gui) to make art creation more convenient for users. 🔔This GUI is still being optimized. If you have any questions or suggestions, please contact me at zdw1999@zju.edu.cn.
 
-![Demo1](videos/video1.gif)
+## MOGO-GUI
+We provide a simple GUI for MOGO. You can easily run it by casting
 
+```
+python app.py
+```
 
 ## 🏫About us
 Thank you for your interest in this project. We are a startup company, if you are interested in our project, please contact us.
 
 ## 🦄 Performance
+
+<p align="center">
+  <img src="assets/Mogo_demo_1_00.png" alt="example"/>
+</p>
+
+<p align="center">
+  <img src="assets/Mogo_demo_2_00.png" alt="example"/>
+</p>
 
 ### 🏕️ Complex Scenarios
 <div align="center">
@@ -93,7 +107,7 @@ Thank you for your interest in this project. We are a startup company, if you ar
 </div>
 
 ## Citation
-If you use `Mogo` or `MoSA-VQ` in your work, please use the following BibTeX entries:
+If you use `MOGO` or `MoSA-VQ` in your work, please use the following BibTeX entries:
 ```
 @article{fu2024mogo,
   title={Mogo: RQ Hierarchical Causal Transformer for High-Quality 3D Human Motion Generation},
