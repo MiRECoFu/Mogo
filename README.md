@@ -157,7 +157,7 @@ python app.py
 ```
 
 ## 🏫About us
-Thank you for your interest in this project. We are a startup company, if you are interested in our project, please contact us.
+Thank you for your interest in this project. We are a startup team, if you are interested in our project, please contact us.
 
 ## 🦄 Performance
 
