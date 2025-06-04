@@ -70,7 +70,7 @@ conda activate mogo
 pip install -r requirement.txt
 ```
 
-## Single Image Generation
+## Single Motion Sequence Generation
 By using the following command, you can quickly generate an image with **MOGO**.
 
 MOGO Generation
