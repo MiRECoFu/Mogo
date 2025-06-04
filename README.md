@@ -83,9 +83,6 @@ MoSA-VQ Generation
 CUDA_VISIBLE_DEVICES=0 python gen_t2m.py
 ```
 
-The following are examples of the generated images using MOGO.
-
-
 
 ## MOGO-GUI
 We provide a simple GUI for MOGO. You can easily run it by casting
@@ -99,17 +96,22 @@ Thank you for your interest in this project. We are a startup company, if you ar
 
 ## 🦄 Performance
 
-### 🏕️ Complex Scenarios
+### 🏕️ Instruction Completion
 <p align="center">
   <img src="assets/Mogo_demo_1_00.png" alt="example"/>
 </p>
 
-### 🌋 Difficult Conditions
+### 🌋 Complex Scenarios
 <p align="center">
   <img src="assets/Mogo_demo_2_00.png" alt="example"/>
 </p>
 
 
+## The following are examples of the generated bvh using MOGO.
+![example](assets/backflip.gif)
+![example](assets/injured-collapse-mogo.gif)
+![example](assets/skips-circle-mogo-raw.gif)
+![example](assets/stand-swim-mogo.gif)
 
 ## Citation
 If you use `MOGO` or `MoSA-VQ` in your work, please use the following BibTeX entries:
