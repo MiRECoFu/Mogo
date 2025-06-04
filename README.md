@@ -1,90 +1,104 @@
-# Mogo (Motion Generation with One-pass)
+<h2 align="center">Mogo (Motion Generation with One-pass)</h2>
+<p align="center">
+    <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer">
+        <img alt="License: CC BY-NC 4.0" src="https://img.shields.io/badge/license-CC--BY--NC%204.0-lightgrey">
+    </a>
+    <a href="https://github.com/MiRECoFu/Mogo/issues" target="_blank">
+        <img alt="GitHub issues" src="https://img.shields.io/github/issues/MiRECoFu/Mogo?color=orange">
+    </a>
+    <a href="https://github.com/MiRECoFu/Mogo/pulls" target="_blank">
+        <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/MiRECoFu/Mogo">
+    </a>
+    <a href="https://github.com/MiRECoFu/Mogo/stargazers" target="_blank">
+        <img alt="GitHub stars" src="https://img.shields.io/github/stars/MiRECoFu/Mogo?color=brightgreen">
+    </a>
+    <a href="https://arxiv.org/pdf/2412.07797" target="_blank">
+        <img alt="arXiv" src="https://img.shields.io/badge/arXiv-2304.08069-red">
+    </a>
+    <a href="mailto:p.fang@soton.ac.uk">
+        <img alt="email" src="https://img.shields.io/badge/contact_me-email-yellow">
+    </a>
+</p>
 
-## 项目概述
-Mogo 是一个专注于特定领域（从代码推测可能与运动生成相关）的项目，运用了深度学习技术，特别是 Transformer 架构，实现了文本到运动的生成任务。项目涵盖了模型训练、评估、数据处理等多个环节，同时提供了相应的工具和脚本。
+This is the official implementation of papers 
+- NeurIPS 2025 under review
 
-## 代码结构
-以下是项目主要文件和目录的简要说明：
-### 主要模块
-- `Mogo/common/skeleton.py`：包含获取运动骨架运动学树的函数。
-- `Mogo/models/transformers/`：
-  - `transformotion.py`：负责文本编码，使用 CLIP 模型对原始文本进行编码。
-  - `transformotion_trainer.py`：实现了模型的训练逻辑，包括优化器设置、学习率调整、损失计算等。
-  - `transformer_decoder.py`：实现了 RoPE（Rotary Position Embedding）技术，用于处理位置信息。
-- `Mogo/utils/`：
-  - `motion_process.py`：包含运动处理相关的函数，如获取局部姿态。
-  - `eval_t2m.py`：用于评估文本到运动生成模型的性能，计算 FID、多样性、R 精度等指标。
-- `Mogo/gen_t2m.py`：
-  动作生成基于我们的MOGO模型
-- `Mogo/gen_t2m_vq.py`：
-  动作生成基于我们的MoSA-VQ模型
-  
-### 配置文件
-- `Mogo/environment_trm.yml`：用于创建项目所需的 Conda 环境。
-- `Mogo/requirements.txt`：列出了项目所需的 Python 依赖包。
+---
+## 🚀 Updates
+- \[2024.06.03\] Reorganize github
+- \[2024.05.21\] Submit data process and evaluation algorithms
+- \[2024.11.23\] Fix some bugs.
+- \[2024.08.04\] Release model architecture.
 
-## 安装步骤
-### 1. 创建 Conda 环境
-```bash
-conda env create -f Mogo/environment_trm.yml
-conda activate transformotion
+## 🔥🔥🔥 Todo
+- [x] Project Page
+- [x] Code
+- [x] App.py
+- [x] Inference code of MoSA-VQ and Mogo
+- [ ] Release pretrained weights train on HumanML3D
+- [ ] Release pretrained weights train on our own made huge motion dataset
+- [ ] Code of infinite length continuation and generation
+- [ ] Controllable motion generation
+
+## Installation
+
+### Conda environment setup
+```
+conda create -n mogo python=3.10 -y
+conda activate mogo
+pip install -r requirement.txt
 ```
 
-### 2. 安装 Python 依赖
-```bash
-pip install -r Mogo/requirements.txt
+## Single Image Generation
+By using the following command, you can quickly generate an image with **MIGC**.
 ```
-
-## 使用说明
-### 训练模型
-运行 `train_transformotion.py` 脚本进行模型训练：
-```bash
-python Mogo/trainers/train_transformotion.py
+CUDA_VISIBLE_DEVICES=0 python inference_single_image.py
 ```
-在训练之前，你可能需要根据实际情况修改 `TrainT2MOptions` 中的参数，例如数据集路径、模型保存路径等。
+The following is an example of the generated image based on stable diffusion v1.4.
+ 
+<p align="center">
+  <img src="figures/MIGC_SD14_out.png" alt="example" width="200" height="200"/>
+  <img src="figures/MIGC_SD14_out_anno.png" alt="example_annotation" width="200" height="200"/>
+</p>
 
-### 评估模型
-可以使用 `Mogo/utils/eval_t2m.py` 中的 `evaluation_res_transformer_plus_l1` 函数对训练好的模型进行评估：
-```python
-from Mogo.utils.eval_t2m import evaluation_res_transformer_plus_l1
-
-# 假设已经定义了 val_loader、vq_model、trans 等变量
-fid, diversity, R_precision, matching_score_pred, l1_dist = evaluation_res_transformer_plus_l1(
-    val_loader, vq_model, trans, repeat_id=1, eval_wrapper=eval_wrapper, num_joint=opt.joints_num
-)
+By using the following command, you can quickly generate an image with **MIGC++**, where both the box and mask are used to control the instance location.
 ```
+CUDA_VISIBLE_DEVICES=0 python migc_plus_inference_single_image.py
+```
+The following are examples of the generated images using MIGC++.
 
-## 注意事项
-- 确保你的环境中已经安装了 CUDA，并且 PyTorch 版本与 CUDA 版本兼容。
-- 在运行代码之前，需要准备好相应的数据集，并将数据集路径配置到 `train_transformotion.py` 中。
+<p align="center">
+  <img src="figures/migc++_output.png" alt="example" width="1000" height="300"/>
+</p>
 
-## License
+## MIGC-GUI
+We have combined MIGC and [GLIGEN-GUI](https://github.com/mut-ex/gligen-gui) to make art creation more convenient for users. 🔔This GUI is still being optimized. If you have any questions or suggestions, please contact me at zdw1999@zju.edu.cn.
 
-This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International License**.
+![Demo1](videos/video1.gif)
 
-You are free to use this code for **research and non-commercial purposes**.  
-**Commercial use is not permitted** without explicit permission.
 
-[Read full license](http://creativecommons.org/licenses/by-nc/4.0/)
+## 🏫About us
+Thank you for your interest in this project. We are a startup company, if you are interested in our project, please contact us.
 
-Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
+## 🦄 Performance
 
-Copyright (c) 2024 amberjar
+### 🏕️ Complex Scenarios
+<div align="center">
+  <img src="https://github.com/lyuwenyu/RT-DETR/assets/77494834/52743892-68c8-4e53-b782-9f89221739e4" width=500 >
+</div>
 
-This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
-To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
+### 🌋 Difficult Conditions
+<div align="center">
+  <img src="https://github.com/lyuwenyu/RT-DETR/assets/77494834/213cf795-6da6-4261-8549-11947292d3cb" width=500 >
+</div>
 
-You are free to:
-- Share — copy and redistribute the material in any medium or format
-- Adapt — remix, transform, and build upon the material
-
-Under the following terms:
-- Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made.
-- NonCommercial — You may not use the material for commercial purposes.
-
-No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
-
-## 联系信息
-如果你有任何问题或建议，请通过以下方式联系我们：
-- 邮箱：[p.fang@soton.ac.uk]
-- GitHub Issues：[https://github.com/MiRECoFu/Mogo/issues](https://github.com/MiRECoFu/Mogo/issues)
+## Citation
+If you use `Mogo` or `MoSA-VQ` in your work, please use the following BibTeX entries:
+```
+@article{fu2024mogo,
+  title={Mogo: RQ Hierarchical Causal Transformer for High-Quality 3D Human Motion Generation},
+  author={Fu, Dongjie},
+  journal={arXiv preprint arXiv:2412.07797},
+  year={2024}
+}
+```

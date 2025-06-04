@@ -1,2 +1,11 @@
 /wandb/
 /log/
+
+# IDE
+.idea/
+
+# Python 编译缓存
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
