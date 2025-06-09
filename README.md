@@ -17,7 +17,7 @@ Human Motion Generation</h2>
     <a href="https://github.com/MiRECoFu/Mogo/stargazers" target="_blank">
         <img alt="GitHub stars" src="https://img.shields.io/github/stars/MiRECoFu/Mogo?color=brightgreen">
     </a>
-    <a href="https://arxiv.org/pdf/2412.07797" target="_blank">
+    <a href="https://arxiv.org/pdf/2506.05952" target="_blank">
         <img alt="arXiv" src="https://img.shields.io/badge/arXiv-2304.08069-red">
     </a>
     <a href="mailto:p.fang@soton.ac.uk">
