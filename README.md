@@ -3,7 +3,7 @@
 </p>
 <h2 align="center">MOGO: Residual Quantized Hierarchical Causal
 Transformer for High-Quality and Real-Time 3D
-Human Motion Generation</h2>
+Human Motion Generation (AAAI 2026)</h2>
 <p align="center">
     <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer">
         <img alt="License: CC BY-NC 4.0" src="https://img.shields.io/badge/license-CC--BY--NC%204.0-lightgrey">
@@ -27,7 +27,7 @@ Human Motion Generation</h2>
 <p align="center">
 <strong>MOGO: Residual Quantized Hierarchical Causal
 Transformer for High-Quality and Real-Time 3D
-Human Motion Generation</strong>
+Human Motion Generation (AAAI 2026)</strong>
     <br>
     <a href='' target='_blank'>Dongjie Fu*</a>&emsp;
     <a href='' target='_blank'>Tengjiao Sun*</a>&emsp;
